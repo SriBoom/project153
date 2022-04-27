@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    </head>
+
+    <body>
+        <a-scene>
+            <a-sky src="./background.jpg"></a-sky>
+            <a-entity id="look" look-controls camera position="0 150 300"></a-entity>
+
+            <a-assests>
+                <a-asset-item id="terrainMap" src="./underwater_terrain_-_agisoftnaturechallenge/scene.gltf"></a-asset-item>
+                <a-asset-item id="diver" src="./5-_dive_suit/scene.gltf"></a-asset-item>
+            </a-assests>
+
+            <a-entity id="coral" gltf-model="#terrainMap" scale="500 500 500" animation="property: position; to: 0 0 1000; easing:linear; loop: true; dur: 150000" terrain-rotation></a-entity>
+            <a-entity id="scuba_diver" gltf-model="#diver" scale="1 1 1" position="0 30 200" rotation="0 90 0"></a-entity>
+        </a-scene>
+    </body>
+</html>
