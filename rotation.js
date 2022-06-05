@@ -1,31 +1,51 @@
 AFRAME.registerComponent("terrain-rotation", {
-    schema:{
-        speedOfRotation:{type:"number", default: 0}
+    schema: {
+        speedOfRotation: { type: "number", default: 0 },
+        speedOfAscent: { type: "number", default: 0 }
     },
-    init:function(){
-        window.addEventListener("keydown", (e)=>{
-            if(e.key==="ArrowRight"){
-                if(this.data.speedOfRotation<0.1){
-                    this.data.speedOfRotation += 0.01
+    init: function () {
+        window.addEventListener("keydown", (e) => {
+            this.data.speedOfRoation = this.el.getAttribute("rotation");
+            this.data.speedOfAscent = this.el.getAttribute("position");
+
+            var diverRotation = this.data.speedOfRoation;
+            var diverPosition = this.data.speedOfAscent;
+
+            if (e.key === "ArrowRight") {
+                if (this.data.speedOfRotation < 10) {
+                    this.data.speedOfRotation += 0.5
+                    this.el.setAttribute("rotation", diverRotation)
                 }
             }
 
-            if(e.key==="ArrowLeft"){
-                if(this.data.speedOfRotation>-0.1){
-                    this.data.speedOfRotation -= 0.01
+            if (e.key === "ArrowLeft") {
+                if (this.data.speedOfRotation > -10) {
+                    this.data.speedOfRotation -= 0.5
+                    this.el.setAttribute("rotation", diverRotation)
                 }
             }
-        })
-    },
-    tick:function(){
-        //rotation will read the rotation of the object
-        var mapRotation=this.el.getAttribute("rotation");
-        mapRotation.y += this.data.speedOfRotation;
 
-        this.el.setAttribute("rotation", {
-            x:mapRotation.x,
-            y:mapRotation.y,
-            z:mapRotation.z
+            if (e.key === "ArrowUp") {
+                if (diverRotation.z < 20) {
+                  diverRotation.z += 0.5;
+                  this.el.setAttribute("rotation", diverRotation);
+                }
+                if (diverPosition.y < 2) {
+                  diverPosition.y += 0.01;
+                  this.el.setAttribute("position", diverPosition);
+                }
+              }
+
+              if (e.key === "ArrowDown") {
+                if (diverRotation.z > -10) {
+                  diverRotation.z -= 0.5;
+                  this.el.setAttribute("rotation", diverRotation);
+                }
+                if (diverPosition.y > -2) {
+                  diverPosition.y -= 0.01;
+                  this.el.setAttribute("position", diverPosition);
+                }
+              }
         })
     }
 })
